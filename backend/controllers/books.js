@@ -38,11 +38,11 @@ exports.deleteBook = (req, res, next) => {
             fs.unlink(`images/${filename}`, () => {
                 Book.deleteOne({_id: req.params.id})
                     .then(() => res.status(200).json({message: 'Livre supprimé avec succès !'}))
-                    .catch(error => res.status(400).json({ erreur: error }));
+                    .catch(error => res.status(400).json({ error }));
             });
         }
     })
-    .catch(error => res.status(500).json({ erreur: error }));
+    .catch(error => res.status(500).json({ error }));
 };
 
 exports.modifyBook = (req, res, next) => {
@@ -84,5 +84,5 @@ exports.rateBook = (req, res, next) => {
             return book.save();
         })
         .then(book => res.status(200).json(book))
-        .catch(error => res.status(500).json({ erreur: error })); 
+        .catch(error => res.status(500).json({ error })); 
 };
