@@ -6,6 +6,7 @@ const userRoutes = require('./route/user');
 const bookRoutes = require('./route/books');
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 
 
 mongoose.connect('mongodb+srv://admin:1HKGUiUeQM5Z4NtP@cluster0.dhktszw.mongodb.net/?retryWrites=true&w=majority',
@@ -23,9 +24,17 @@ app.use((req, res, next) => {
   });
 
 app.use(bodyParser.json());
+
 app.use(cors());
+
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', userRoutes);
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// Vérification et création du répertoire "images" s'il n'existe pas
+if (!fs.existsSync("images")) {
+  fs.mkdirSync("images");
+}
 
 module.exports = app;
