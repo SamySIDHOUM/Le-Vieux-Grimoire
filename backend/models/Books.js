@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Définition du schéma du modèle pour les livres
 const bookSchema = mongoose.Schema({
     userId: { type: String, required: true},
     title: { type: String, required: true},
