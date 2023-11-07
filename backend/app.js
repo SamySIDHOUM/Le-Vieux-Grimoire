@@ -15,6 +15,11 @@ mongoose.connect('mongodb+srv://admin:1HKGUiUeQM5Z4NtP@cluster0.dhktszw.mongodb.
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+// Vérification et création du répertoire "images" s'il n'existe pas
+if (!fs.existsSync("images")) {
+  fs.mkdirSync("images");
+}
+
 const app= express();
 // Configuration des en-têtes CORS pour permettre les requêtes depuis n'importe quelle origine
 app.use((req, res, next) => {
@@ -34,10 +39,5 @@ app.use('/api/auth', userRoutes);
 
 // Configuration du serveur pour servir les images depuis le répertoire 'images'
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
-// Vérification et création du répertoire "images" s'il n'existe pas
-if (!fs.existsSync("images")) {
-  fs.mkdirSync("images");
-}
 
 module.exports = app;

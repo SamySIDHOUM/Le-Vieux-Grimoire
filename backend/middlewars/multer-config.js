@@ -1,7 +1,7 @@
 const multer = require('multer');
 // Types MIME autorisés 
 const MIME_TYPES = {
-  'image/jpg': 'jpg',
+  "image/jpg": "jpg",
   'image/jpeg': 'jpg',
   'image/png': 'png',
   'image/webp' : 'webp',
@@ -10,15 +10,15 @@ const MIME_TYPES = {
 const storage = multer.diskStorage({
   // Destination où les fichiers seront enregistrés
   destination: (req, file, callback) => {
-    callback(null, 'images');
+    callback(null, "images");
   },
   filename: (req, file, callback) => {
     // Remplace les espaces par des underscores
-    const name = file.originalname.split(" ").join("_");
+    const name = file.originalname.split(" ").join("_").replace(/\.(jpg|jpeg|png)$/, '');
     const extension = MIME_TYPES[file.mimetype];
     // Génère le nom du fichier 
     callback(null, name + Date.now() + "." + extension);
   }
 });
 
-module.exports = multer({storage: storage}).single('image');
+module.exports = multer({storage: storage}).single("image");
